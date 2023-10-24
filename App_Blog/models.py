@@ -12,6 +12,9 @@ class Blog(models.Model):
     publish_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-publish_date',]
+
     def __str__(self):
         return self.blog_title
     
@@ -22,6 +25,9 @@ class Comment(models.Model):
     comment = models.TextField()
     comment_date = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-comment_date',]
+
     def __str__(self):
         return self.comment
     
@@ -31,4 +37,12 @@ class Likes(models.Model):
 
     def __str__(self):
         return self.user + " likes " + self.blog
+
+    
+# class Dislikes(models.Model):
+#     blog = models.ForeignKey(Blog, related_name='disliked_blog', on_delete=models.CASCADE)
+#     user = models.ForeignKey(User, related_name='disliker_user', on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.user + " dislikes " + self.blog
     
