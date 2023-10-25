@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView, View
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, TemplateView, View, UpdateView
+#from django.views.generic.edit import UpdateView
 from App_Blog.forms import CommentForm
 from App_Blog.models import Blog, Comment, Dislikes, Likes
 from django.urls import reverse, reverse_lazy
@@ -26,6 +27,16 @@ class CreateBlog(LoginRequiredMixin, CreateView):
         blog_obj.save()
         return HttpResponseRedirect(reverse('index'))
 
+
+class UpdateBlog(LoginRequiredMixin, UpdateView):
+    model = Blog
+    template_name = 'App_Blog/edit_blogs.html'
+    fields = ('blog_title', 'blog_content', 'blog_image')
+    
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('App_Blog:blog_details', kwargs={'slug':self.object.slug})
+        # update and delete we must use reverse_lazy, this means untill i update it dont redirect
+    
 
 class BlogList(ListView):
     context_object_name = 'blogs'
@@ -104,13 +115,6 @@ def undisliked(request, pk):
 
 
 
-class UpdateBlog(LoginRequiredMixin, UpdateView):
-    model = Blog
-    fields = ('blog_title', 'blog_content', 'blog_image')
-    template_name = 'App_Blog/edit_blogs.html'
-    
-    def get_success_url(self, **kwargs):
-        return reverse_lazy('App_Blog:blog_details', kwargs={'slug':self.object.slug})
     
 
 

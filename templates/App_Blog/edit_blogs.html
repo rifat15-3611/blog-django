@@ -5,7 +5,7 @@
 
 {% if blog.author == user %}
 <form method="post" enctype="multipart/form-data">
-{{from|crispy}}
+{{form|crispy}}
 {% csrf_token %}
 <button type="submit" class="btn btn-success btn-sm">Update</button>
 {% else %}
