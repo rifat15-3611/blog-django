@@ -1,0 +1,37 @@
+-> python --version  (check python version)
+
+-> django-admin startproject Social_Media_Project  (create project)
+-> python -m venv env  (create virtual environment)
+-> env/Scripts/activate  (activate the virtual environment)
+-> pip list  (check installed packages)
+-> pip install django  (install django)
+-> pip install pillow  (install pillow)
+-> py manage.py startapp App_Name  (create app)
+
+-------------------------------------------------------------------------------------------------------------------------------------
+-> project - setting.py - INSTALLED_APPS [""]  (register the app name in main project setting.py file)
+-> project - setting.py - TEMPLATES_DIR = BASE_DIR / "templates"  (set directory path for templates directory bellow the BASE_DIR )
+-> project - setting.py - STATIC_DIR = BASE_DIR / "static"  (set directory path for static directory bellow the TEMPLATES_DIR )
+-> project - setting.py - MEDIA_DIR = BASE_DIR / "media"  (set directory path for media directory bellow the STATIC_DIR )
+-> project - setting.py - TEMPLATES = [ {"DIRS": [TEMPLATES_DIR,],} ]  (set TEMPLATES_DIR inside TEMPLATES[] )
+-> project - setting.py - STATICFILES_DIRS = [STATIC_DIR,]  (add STATICFILES_DIRS = [STATIC_DIR,] -under- STATIC_URL = "static/" )
+-> project - setting.py - MEDIA_ROOT = MEDIA_DIR  (add MEDIA_ROOT = MEDIA_DIR -under- STATICFILES_DIRS = [STATIC_DIR,] )
+-> project - setting.py - MEDIA_URL = "/media/"  (add MEDIA_URL = "/media/" -under- STATICFILES_DIRS = [STATIC_DIR,] )
+-> project - setting.py - TIME_ZONE = "Asia/Dhaka"  (change time zone )
+-------------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------
+change password -> click this text-> change url as per need
+F:\project\python\django\2_Blog_django\env\Lib\site-packages\django\contrib\auth\forms.py->UserChangeForm
+---------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------
+-> py manage.py migrate
+-> py manage.py makemigrations App_Name
+-> py manage.py migrate
+
+
+-> py manage.py createsuperuser
+---------------------------------------------------------------------------------------------------------
+
+-> py manage.py runserver (run the server)
