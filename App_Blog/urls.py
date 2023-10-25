@@ -9,8 +9,8 @@ urlpatterns = [
     path("details/<slug:slug>/", views.blog_details, name="blog_details"),
     path("liked/<pk>/", views.liked, name="liked_post"),
     path("unliked/<pk>/", views.unliked, name="unliked_post"),
-    # path("disliked/<pk>/", views.disliked, name="disliked_post"),
-    # path("undisliked/<pk>/", views.undisliked, name="undisliked_post"),
+    path("disliked/<pk>/", views.disliked, name="disliked_post"),
+    path("undisliked/<pk>/", views.undisliked, name="undisliked_post"),
     path("myblogs/", views.MyBlog.as_view(), name="my_blogs"),
     path("edit/<pk>/", views.UpdateBlog.as_view(), name="edit_blog"),
 ]

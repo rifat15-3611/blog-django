@@ -36,13 +36,13 @@ class Likes(models.Model):
     user = models.ForeignKey(User, related_name='liker_user', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user + " likes " + self.blog
+        return self.user , " likes " , self.blog
 
     
-# class Dislikes(models.Model):
-#     blog = models.ForeignKey(Blog, related_name='disliked_blog', on_delete=models.CASCADE)
-#     user = models.ForeignKey(User, related_name='disliker_user', on_delete=models.CASCADE)
+class Dislikes(models.Model):
+    blog = models.ForeignKey(Blog, related_name='disliked_blog', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='disliker_user', on_delete=models.CASCADE)
 
-#     def __str__(self):
-#         return self.user + " dislikes " + self.blog
+    def __str__(self):
+        return self.user , " dislikes " , self.blog
     

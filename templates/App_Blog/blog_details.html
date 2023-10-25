@@ -9,8 +9,8 @@
         <h4>Posted by : {{ blog.author }}</h4>
         <h6><i>Published on : {{ blog.publish_date }}</i></h6>
         <h6><i>Updated on : {{ blog.update_date }}</i></h6>
-        <!-- <h6>{{ blog.liked_blog.count }} Likes | {{ blog.unliked_blog.count }} Dislikes | {{ blog.blog_comment.count }} Comments</h6> -->
-        <h6>{{ blog.liked_blog.count }} Likes | {{ blog.blog_comment.count }} Comments</h6>
+        <h6>{{ blog.liked_blog.count }} Likes | {{ blog.disliked_blog.count }} Dislikes | {{ blog.blog_comment.count }} Comments</h6>
+        <!-- <h6>{{ blog.liked_blog.count }} Likes | {{ blog.blog_comment.count }} Comments</h6> -->
     </div>
     <div class="col-sm-6">
         <img src="{{ blog.blog_image.url }}" class="img-fluid" alt="Responsive image" title="{{ blog.blog_title }}" width="100%">
@@ -21,9 +21,15 @@
 </div>
 
 {% if not liked %}
-<a href="{% url 'App_Blog:liked_post' pk=blog.pk %}"><i class="fa-regular fa-thumbs-up fa-bounce" style="color: #11a21b;"></i></a>
+<a href="{% url 'App_Blog:liked_post' pk=blog.pk %}"><i class="fa-regular fa-thumbs-up" style="color: #11a21b;"></i></a> |
 {% else %}
-<a href="{% url 'App_Blog:unliked_post' pk=blog.pk %}"><i class="fa-regular fa-thumbs-down fa-bounce" style="color: #a21111;"></i></a>
+<a href="{% url 'App_Blog:unliked_post' pk=blog.pk %}"><i class="fa-regular fa-thumbs-up fa-bounce" style="color: #11a21b;"></i></a> |
+{% endif %}
+
+{% if not disliked %}
+ <a href="{% url 'App_Blog:disliked_post' pk=blog.pk %}"><i class="fa-regular fa-thumbs-down" style="color: #a21111;"></i></a>
+{% else %}
+ <a href="{% url 'App_Blog:undisliked_post' pk=blog.pk %}"><i class="fa-regular fa-thumbs-down fa-bounce" style="color: #a21111;"></i></a>
 {% endif %}
 
 <div class="row">

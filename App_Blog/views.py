@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView, View
 from App_Blog.forms import CommentForm
-from App_Blog.models import Blog, Comment, Likes
+from App_Blog.models import Blog, Comment, Dislikes, Likes
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -37,17 +37,18 @@ class BlogList(ListView):
 def blog_details(request, slug):
     blog = Blog.objects.get(slug=slug)
     comment_form = CommentForm()
+    
     already_liked = Likes.objects.filter(blog=blog, user=request.user)
     if already_liked:
         liked = True
     else:
         liked = False
 
-    # already_disliked = Dislikes.objects.filter(blog=blog, user=request.user)
-    # if already_disliked:
-    #     disliked = True
-    # else:
-    #     disliked = False
+    already_disliked = Dislikes.objects.filter(blog=blog, user=request.user)
+    if already_disliked:
+        disliked = True
+    else:
+        disliked = False
     
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
@@ -58,8 +59,8 @@ def blog_details(request, slug):
             comment.save()
             return HttpResponseRedirect(reverse('App_Blog:blog_details', kwargs={'slug':slug}))
 
-    # return render(request, 'App_Blog/blog_details.html', context={'blog':blog, 'comment_form':comment_form, 'liked':liked, 'disliked':disliked})
-    return render(request, 'App_Blog/blog_details.html', context={'blog':blog, 'comment_form':comment_form, 'liked':liked})
+    return render(request, 'App_Blog/blog_details.html', context={'blog':blog, 'comment_form':comment_form, 'liked':liked, 'disliked':disliked})
+    #return render(request, 'App_Blog/blog_details.html', context={'blog':blog, 'comment_form':comment_form, 'liked':liked})
 
 
 @login_required
@@ -79,6 +80,28 @@ def unliked(request, pk):
     already_liked = Likes.objects.filter(blog=blog, user=user)
     already_liked.delete()
     return HttpResponseRedirect(reverse('App_Blog:blog_details', kwargs={'slug':blog.slug}))
+
+
+@login_required
+def disliked(request, pk):
+    blog = Blog.objects.get(pk=pk)
+    user = request.user
+    already_disliked = Dislikes.objects.filter(blog=blog, user=user)
+    if not already_disliked:
+        disliked_post = Dislikes(blog=blog, user=user)
+        disliked_post.save()
+    return HttpResponseRedirect(reverse('App_Blog:blog_details', kwargs={'slug':blog.slug}))
+
+
+@login_required
+def undisliked(request, pk):
+    blog = Blog.objects.get(pk=pk)
+    user = request.user
+    already_disliked = Dislikes.objects.filter(blog=blog, user=user)
+    already_disliked.delete()
+    return HttpResponseRedirect(reverse('App_Blog:blog_details', kwargs={'slug':blog.slug}))
+
+
 
 
 class UpdateBlog(LoginRequiredMixin, UpdateView):
